@@ -1,0 +1,12 @@
+.optimg img {
+  width: 350px;
+}
+
+.optimg {
+  display: inline-block;
+  margin-left: 2%;
+}
+
+.logo {
+  text-align: center;
+}
