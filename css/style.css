@@ -15,6 +15,12 @@
 .optimg {
   vertical-align: top;
   border: 2px solid #000;
+  height: 300px;
+}
+
+.optimg img {
+  height: 300px;
+  width: auto;
 }
 
 fieldset {
