@@ -18,11 +18,6 @@
   height: 300px;
 }
 
-.optimg img {
-  height: 300px;
-  width: auto;
-}
-
 fieldset {
   border-style: none;
 }
