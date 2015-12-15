@@ -5,11 +5,13 @@ var i1 = '';
 var i2 = '';
 var i3 = '';
 var totalVotes = 0;
+var productNames = ['bag','banana','boots','chair','cthulhu','dragon','pen','scissors','shark','sweep','unicorn','usb','water_can','wine_glass']
 
-function Productoption(pname, imagesrc, chosen, tally) {
+function Productoption(pname, imagesrc, chosen, views, tally) {
   this.pname = pname;
   this.imagesrc = imagesrc;
   this.chosen = chosen;
+  this.views = views;
   this.tally = 0;
   products.push(this);
 }
@@ -18,13 +20,29 @@ function randInt(min, max) {
   return Math.floor(Math.random() * (max - min)) + min;
 }
 
+Productoption.prototype.succRate = function() {
+  var k = this.tally / this.views;
+  k = k.toFixed(2);
+  console.log(k);
+  return k;
+}
+
+function buildProds() {
+  for (var w = 0; w < productNames.length; w++) {
+    new Productoption(productNames[w], '<img src= "img/' + productNames[w] + '.jpg">', false, 0, 0);
+  }
+};
+
+buildProds();
+
 function selectOpts() {
   choices = [];
   for(var i = 0; i < 3; i++) {
-    p = randInt(0,13);
+    p = randInt(0,14);
     if(products[p].chosen !== true) {
       choices.push(products[p]);
       products[p].chosen = true;
+      products[p].views++;
       console.log(products[p].pname + " was added as option " + i);
     }
     else {
@@ -35,23 +53,6 @@ function selectOpts() {
     choices[r].chosen = false;
   }
 }
-
-var bag = new Productoption('bag','<img src="img/bag.jpg">',false,0);
-var banana = new Productoption('banana','<img src="img/banana.jpg">',false,0);
-var boots = new Productoption('boots','<img src="img/boots.jpg">',false,0);
-var chair = new Productoption('chair','<img src="img/chair.jpg">',false,0);
-var cthulhu = new Productoption('cthulhu','<img src="img/cthulhu.jpg">',false,0);
-var dragon = new Productoption('dragon','<img src="img/dragon.jpg">',false,0);
-var pen = new Productoption('pen','<img src="img/pen.jpg">',false,0);
-var scissors = new Productoption('scissors','<img src="img/scissors.jpg">',false,0);
-var shark = new Productoption('shark','<img src="img/shark.jpg">',false,0);
-var sweep = new Productoption('sweep','<img src="img/sweep.png">',false,0);
-var unicorn = new Productoption('unicorn','<img src="img/unicorn.jpg">',false,0);
-var usb = new Productoption('usb','<img src="img/usb.gif">',false,0);
-var watercan = new Productoption('watercan','<img src="img/water_can.jpg">',false,0);
-var wineglass = new Productoption('wineglass','<img src="img/wine_glass.jpg">',false,0);
-
-
 
 function renderOut() {
   i1 = document.getElementById('img1');
@@ -65,10 +66,21 @@ function renderOut() {
   i3 = choices[2];
 }
 
+var tCr = document.getElementById('totaldisplay');
+
+function compareNumbers(a, b) {
+  return b.succRate() - a.succRate();
+}
+
+function getSucc() {
+  products.sort(compareNumbers);
+}
+
 function totalCalc() {
-  var tCr = document.getElementById('totaldisplay');
+  tCr.hidden = false;
   tCr.innerHTML = '';
-  if (totalVotes == 15) {
+  getSucc();
+  if (totalVotes % 15 === 0) {
     var tableEl = document.createElement('table');
     var trEl = document.createElement('tr');
     for (var s = 0; s < products.length; s++) {
@@ -84,9 +96,26 @@ function totalCalc() {
       tmEl.appendChild(tdEl);
     }
     tableEl.appendChild(tmEl);
+    var teEl = document.createElement('tr');
+    for (var q = 0; q < products.length; q++) {
+      var tuEl = document.createElement('td');
+      tuEl.textContent = products[q].views;
+      teEl.appendChild(tuEl);
+    }
+    tableEl.appendChild(teEl);
+    var twEl = document.createElement('tr');
+    for (var q = 0; q < products.length; q++) {
+      var tjEl = document.createElement('td');
+      tjEl.className = 'rate';
+      tjEl.textContent = products[q].succRate();
+      twEl.appendChild(tjEl);
+    }
+    tableEl.appendChild(twEl);
   }
   tCr.appendChild(tableEl);
 }
+
+var dbut = document.getElementById('dbut');
 
 function voteUp(id) {
   id.tally++;
@@ -94,23 +123,25 @@ function voteUp(id) {
   totalVotes++;
   selectOpts();
   renderOut();
-  if (totalVotes === 15) {
-    totalCalc();
+  if(totalVotes % 15 === 0) {
+    dbut.hidden = false;
+  }
+  else {
+    dbut.hidden = true;
+    tCr.hidden = true;
   }
 }
 
 img1.addEventListener('click', function(event) {
   voteUp(i1);
 });
-
 img2.addEventListener('click', function(event) {
   voteUp(i2);
 });
-
 img3.addEventListener('click', function(event) {
   voteUp(i3);
 });
+dbut.addEventListener('click', totalCalc);
 
 selectOpts();
 renderOut();
-//Some sort of event listener for click with submit - make images hidden checkboxes? Use CE code
