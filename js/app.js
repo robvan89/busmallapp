@@ -6,9 +6,25 @@ var i2 = '';
 var i3 = '';
 var totalVotes = 0;
 var productNames = ['bag','banana','boots','chair','cthulhu','dragon','pen','scissors','shark','sweep','unicorn','usb','water_can','wine_glass']
+var labels = [];
+
+var data = {
+  labels: [],
+  datasets: [
+    {
+      label: "Chart Data",
+      fillColor:"#00930C",
+      strokeColor:"#FFFFFF",
+      highlightFill:"#AADDAA",
+      highlightStroke:"EEAAEE",
+      data:[],
+    }
+  ]
+};
 
 function Productoption(pname, imagesrc, chosen, views, tally) {
   this.pname = pname;
+  data.labels.push(this.pname);
   this.imagesrc = imagesrc;
   this.chosen = chosen;
   this.views = views;
@@ -73,7 +89,21 @@ function compareNumbers(a, b) {
 }
 
 function getSucc() {
-  products.sort(compareNumbers);
+  //products.sort(compareNumbers);
+  //data.datasets[0].data.sort(compareNumbers);
+  for (var c=0; c<data.labels.length; c++) {
+    labels.push(data.labels[c]);
+  }
+}
+
+var ctx = document.getElementById("myChart").getContext("2d");
+var chid = document.getElementById("chartdisplay");
+
+function chartRender() {
+  chid.hidden = false;
+  console.log('text');
+  var myBarChart = new Chart(ctx).Bar(data);
+  data.datasets[0].data = [];
 }
 
 function totalCalc() {
@@ -113,6 +143,10 @@ function totalCalc() {
     tableEl.appendChild(twEl);
   }
   tCr.appendChild(tableEl);
+  for (var c=0; c < products.length; c++) {
+    data.datasets[0].data.push(products[c].tally);
+  }
+  chartRender();
 }
 
 var dbut = document.getElementById('dbut');
@@ -120,6 +154,7 @@ var dbut = document.getElementById('dbut');
 function voteUp(id) {
   id.tally++;
   console.log(id.pname + " has " + id.tally + " votes.");
+  //data.datasets[products.indexOf(id)].data.push(id.tally);
   totalVotes++;
   selectOpts();
   renderOut();
@@ -129,6 +164,7 @@ function voteUp(id) {
   else {
     dbut.hidden = true;
     tCr.hidden = true;
+    chid.hidden = true;
   }
 }
 
