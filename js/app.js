@@ -1,3 +1,7 @@
+var img1 = document.getElementById('img1');
+var img2 = document.getElementById('img2');
+var img3 = document.getElementById('img3');
+
 var choices = [];
 var products = [];
 var p = 0;
@@ -5,26 +9,26 @@ var i1 = '';
 var i2 = '';
 var i3 = '';
 var totalVotes = 0;
-var productNames = ['bag','banana','boots','chair','cthulhu','dragon','pen','scissors','shark','sweep','unicorn','usb','water_can','wine_glass']
+var productNames = ['bag','banana','boots','chair','cthulhu','dragon','pen','scissors','shark','sweep','unicorn','usb','water_can','wine_glass'];
 var labels = [];
 
 var data = {
   labels: [],
   datasets: [
     {
-      label: "Chart Data",
-      fillColor:"#00930C",
-      strokeColor:"#FFFFFF",
-      highlightFill:"#AADDAA",
-      highlightStroke:"EEAAEE",
+      label: 'Chart Data',
+      fillColor:'#00930C',
+      strokeColor:'#FFFFFF',
+      highlightFill:'#AADDAA',
+      highlightStroke:'EEAAEE',
       data:[],
     },
     {
-      label: "Views",
-      fillColor:"#FFCC00",
-      strokeColor:"#FFFFFF",
-      highlightFill:"#AADDAA",
-      highlightStroke:"EEAAEE",
+      label: 'Views',
+      fillColor:'#FFCC00',
+      strokeColor:'#FFFFFF',
+      highlightFill:'#AADDAA',
+      highlightStroke:'EEAAEE',
       data:[],
     }
   ]
@@ -49,13 +53,13 @@ Productoption.prototype.succRate = function() {
   k = k.toFixed(2);
   console.log(k);
   return k;
-}
+};
 
 function buildProds() {
   for (var w = 0; w < productNames.length; w++) {
     new Productoption(productNames[w], '<img src= "img/' + productNames[w] + '.jpg">', false, 0, 0);
   }
-};
+}
 
 buildProds();
 
@@ -67,7 +71,7 @@ function selectOpts() {
       choices.push(products[p]);
       products[p].chosen = true;
       products[p].views++;
-      console.log(products[p].pname + " was added as option " + i);
+      console.log(products[p].pname + ' was added as option ' + i);
     }
     else {
       i--;
@@ -104,8 +108,8 @@ function getSucc() {
   }
 }
 
-var ctx = document.getElementById("myChart").getContext("2d");
-var chid = document.getElementById("chartdisplay");
+var ctx = document.getElementById('myChart').getContext('2d');
+var chid = document.getElementById('chartdisplay');
 
 function chartRender() {
   chid.hidden = false;
@@ -141,7 +145,7 @@ var dbut = document.getElementById('dbut');
 
 function voteUp(id) {
   id.tally++;
-  console.log(id.pname + " has " + id.tally + " votes.");
+  console.log(id.pname + ' has ' + id.tally + ' votes.');
   totalVotes++;
   selectOpts();
   renderOut();
