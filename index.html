@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <title>BusMall Marketing Survey</title>
+    <link href='https://fonts.googleapis.com/css?family=Oswald' rel='stylesheet' type='text/css'>
+    <link rel="stylesheet" href="css/style.css" type="text/css">
+  </head>
+  <body>
+    <section class="logo"><img src="img/bmlogo.png"></section>
+    <h1>Select the product which appeals most to you.</h1>
+    <h3>After fifteen clicks, click statistics will appear beneath the selection area.</h3>
+    <p>
+    <fieldset id="imageoptions">
+      <section id="img1" class="optimg" name="img1">.</section>
+      <section id="img2" class="optimg" name="img2">.</section>
+      <section id="img3" class="optimg" name="img3">.</section>
+    </fieldset>
+    <br>
+    <button type="click" name="button" id="dbut" hidden>Show Results</button>
+    </p>
+    <section id="totaldisplay" hidden>.</section>
+    <section id="chartdisplay" hidden><canvas id="myChart" width="800" height="400"></canvas></section>
+    <script src="js/app.js"></script>
+    <script src="js/chart.js"></script>
+  </body>
+</html>

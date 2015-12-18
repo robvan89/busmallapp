@@ -1,0 +1,39 @@
+.optimg img {
+  width: 350px;
+}
+
+.optimg {
+  display: inline-block;
+  margin-left: 2%;
+}
+
+.logo, h1, h3 {
+  text-align: center;
+  font-family: 'Oswald', sans-serif;
+}
+
+.optimg {
+  vertical-align: top;
+  border: 2px solid #000;
+}
+
+fieldset {
+  border-style: none;
+}
+
+td, th {
+  width: 80px;
+}
+
+th {
+  font-size: 1.2em;
+}
+
+.rate {
+  font-weight: bold;
+}
+
+#dbut {
+  width: 300px;
+  font-size:1.5em;
+}
